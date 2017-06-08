@@ -130,6 +130,7 @@ public class FlowEvent {
         }
     }
 
+    final String flowEventVersion = "0.1";
     final String correlationId;
     final String[] history;
     final Reporter reporter;
@@ -181,6 +182,10 @@ public class FlowEvent {
             this.destination = new Node(destinationType, destinationAddress);
         }
         this.edge = new Edge(id, timestamp, milestone, status, errorType, errorReason, payloadType, payloadId, comment);
+    }
+
+    public String getFlowEventVersion() {
+        return flowEventVersion;
     }
 
     public String getCorrelationId() {
