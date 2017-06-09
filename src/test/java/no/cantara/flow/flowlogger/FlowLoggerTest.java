@@ -1,6 +1,7 @@
 package no.cantara.flow.flowlogger;
 
 import com.google.gson.Gson;
+import no.cantara.flow.flowlogger.event.FlowEvent;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.testng.Assert;
@@ -126,7 +127,7 @@ public class FlowLoggerTest {
     @Test
     public void thatGenerateEventIdProduceFourCharacters() {
         String id = event("c67").generateId().build().getEdge().getId();
-        Assert.assertTrue(id.length() == 4);
+        Assert.assertTrue(id.length() == 5);
     }
 
     @Test
