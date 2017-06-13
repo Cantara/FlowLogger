@@ -123,11 +123,6 @@ public class Builder {
             return this;
         }
 
-        public ReporterBuilder milestone(String milestone) {
-            Builder.this.milestone = milestone;
-            return this;
-        }
-
         public ReporterBuilder containerId(String containerId) {
             Builder.this.containerId = containerId;
             return this;
@@ -211,14 +206,8 @@ public class Builder {
          * @return this builder.
          */
         public EdgeBuilder generateId() {
-            try {
-                MessageDigest md5 = MessageDigest.getInstance("MD5");
-                String randomUuid = UUID.randomUUID().toString();
-                String shorterRandomId = Base64.getEncoder().encodeToString(md5.digest(randomUuid.getBytes(Charset.forName("ASCII")))).substring(0, 5);
-                return id(shorterRandomId);
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            }
+            String shorterRandomId = generateShortRandomId();
+            return id(shorterRandomId);
         }
 
         public EdgeBuilder id(String edgeId) {
@@ -256,9 +245,31 @@ public class Builder {
             return this;
         }
 
+        public EdgeBuilder milestone(String milestone) {
+            Builder.this.milestone = milestone;
+            return this;
+        }
+
         public EdgeBuilder comment(String comment) {
             Builder.this.comment = comment;
             return this;
+        }
+    }
+
+    /**
+     * Generate a random (with characters from the basic Base64 alphabet) 5-character long string. Assuming a true
+     * random function, this gives approximately 1 to a billion chance of collision. This is useful when a flow is
+     * split, so that we never (in practice) get the same history for separate paths.
+     *
+     * @return the generated id.
+     */
+    public static String generateShortRandomId() {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            String randomUuid = UUID.randomUUID().toString();
+            return Base64.getEncoder().encodeToString(md5.digest(randomUuid.getBytes(Charset.forName("ASCII")))).substring(0, 5);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }
