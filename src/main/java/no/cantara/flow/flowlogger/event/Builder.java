@@ -21,9 +21,13 @@ public class Builder {
 
     String sourceType;
     String sourceAddress;
+    String sourcePayloadType;
+    String sourcePayloadId;
 
     String destinationType;
     String destinationAddress;
+    String destinationPayloadType;
+    String destinationPayloadId;
 
     String edgeId;
     ZonedDateTime timestamp;
@@ -31,8 +35,6 @@ public class Builder {
     String status = "OK";
     String errorType;
     String errorReason;
-    String payloadType;
-    String payloadId;
     String comment;
 
     public FlowEvent build() {
@@ -56,15 +58,15 @@ public class Builder {
         if (sourceType == null && sourceAddress == null) {
             source = null;
         } else {
-            source = new Node(sourceType, sourceAddress);
+            source = new Node(sourceType, sourceAddress, sourcePayloadType, sourcePayloadId);
         }
         Node destination;
         if (destinationType == null && destinationAddress == null) {
             destination = null;
         } else {
-            destination = new Node(destinationType, destinationAddress);
+            destination = new Node(destinationType, destinationAddress, destinationPayloadType, destinationPayloadId);
         }
-        Edge edge = new Edge(edgeId, timestamp.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME), milestone, status, errorType, errorReason, payloadType, payloadId, comment);
+        Edge edge = new Edge(edgeId, timestamp.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME), milestone, status, errorType, errorReason, comment);
 
         return new FlowEvent(
                 correlationId,
@@ -148,6 +150,16 @@ public class Builder {
             Builder.this.sourceAddress = sourceAddress;
             return this;
         }
+
+        public SourceBuilder payloadType(String payloadType) {
+            Builder.this.sourcePayloadType = payloadType;
+            return this;
+        }
+
+        public SourceBuilder payloadId(String payloadId) {
+            Builder.this.sourcePayloadId = payloadId;
+            return this;
+        }
     }
 
     public class DestinationBuilder extends AbstractBuilder {
@@ -162,6 +174,16 @@ public class Builder {
 
         public DestinationBuilder address(String destinationAddress) {
             Builder.this.destinationAddress = destinationAddress;
+            return this;
+        }
+
+        public DestinationBuilder payloadType(String payloadType) {
+            Builder.this.destinationPayloadType = payloadType;
+            return this;
+        }
+
+        public DestinationBuilder payloadId(String payloadId) {
+            Builder.this.destinationPayloadId = payloadId;
             return this;
         }
     }
@@ -232,16 +254,6 @@ public class Builder {
 
         public EdgeBuilder errorReason(String errorReason) {
             Builder.this.errorReason = errorReason;
-            return this;
-        }
-
-        public EdgeBuilder payloadType(String payloadType) {
-            Builder.this.payloadType = payloadType;
-            return this;
-        }
-
-        public EdgeBuilder payloadId(String payloadId) {
-            Builder.this.payloadId = payloadId;
             return this;
         }
 

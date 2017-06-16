@@ -58,16 +58,18 @@ public class FlowLoggerTest {
                 .source()
                 .type("ether")
                 .address("void")
+                .payloadType("fubarsource")
+                .payloadId("pid2source")
                 .destination()
                 .type("internal")
                 .address("testng-value-test")
+                .payloadType("fubar")
+                .payloadId("pid2")
                 .edge()
                 .id("C")
                 .timestamp(ZonedDateTime.of(2017, 6, 7, 10, 44, 31, 0, ZoneId.of("Europe/Oslo")))
                 .milestone("event-values-test")
                 .status("test-ok")
-                .payloadType("fubar")
-                .payloadId("pid2")
                 .errorType("no-error")
                 .errorReason("none")
                 .comment("some comment")
@@ -82,14 +84,16 @@ public class FlowLoggerTest {
         Assert.assertEquals(event.getReporter().getInstance(), "the only instance");
         Assert.assertEquals(event.getSource().getType(), "ether");
         Assert.assertEquals(event.getSource().getAddress(), "void");
+        Assert.assertEquals(event.getSource().getPayloadType(), "fubarsource");
+        Assert.assertEquals(event.getSource().getPayloadId(), "pid2source");
         Assert.assertEquals(event.getDestination().getType(), "internal");
         Assert.assertEquals(event.getDestination().getAddress(), "testng-value-test");
+        Assert.assertEquals(event.getDestination().getPayloadType(), "fubar");
+        Assert.assertEquals(event.getDestination().getPayloadId(), "pid2");
         Assert.assertEquals(event.getEdge().getId(), "C");
         Assert.assertEquals(event.getEdge().getTimestamp(), "2017-06-07T10:44:31+02:00");
         Assert.assertEquals(event.getEdge().getMilestone(), "event-values-test");
         Assert.assertEquals(event.getEdge().getStatus(), "test-ok");
-        Assert.assertEquals(event.getEdge().getPayloadType(), "fubar");
-        Assert.assertEquals(event.getEdge().getPayloadId(), "pid2");
         Assert.assertEquals(event.getEdge().getErrorType(), "no-error");
         Assert.assertEquals(event.getEdge().getErrorReason(), "none");
         Assert.assertEquals(event.getEdge().getComment(), "some comment");
@@ -105,13 +109,11 @@ public class FlowLoggerTest {
                 .containerId("no container")
                 .instance("the only instance")
                 .source().type("ether").address("void")
-                .destination().type("internal").address("testng-value-test")
+                .destination().type("internal").address("testng-value-test").payloadType("fubar").payloadId("pid2")
                 .edge()
                 .id("C")
                 .timestamp(ZonedDateTime.of(2017, 6, 7, 10, 44, 31, 0, ZoneId.of("Europe/Oslo")))
                 .status("test-ok")
-                .payloadType("fubar")
-                .payloadId("pid2")
                 .milestone("event-values-test")
                 .errorType("no-error")
                 .errorReason("none")
