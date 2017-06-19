@@ -3,6 +3,7 @@ package no.cantara.flow.flowlogger.event;
 public class Edge {
 
     final String id;
+    final String retryGroupId;
     final String timestamp;
     final String milestone;
     final String status;
@@ -10,8 +11,9 @@ public class Edge {
     final String errorReason;
     final String comment;
 
-    public Edge(String id, String timestamp, String milestone, String status, String errorType, String errorReason, String comment) {
+    public Edge(String id, String retryGroupId, String timestamp, String milestone, String status, String errorType, String errorReason, String comment) {
         this.id = id;
+        this.retryGroupId = retryGroupId;
         this.timestamp = timestamp;
         this.milestone = milestone;
         this.status = status;
@@ -22,6 +24,10 @@ public class Edge {
 
     public String getId() {
         return id;
+    }
+
+    public String getRetryGroupId() {
+        return retryGroupId;
     }
 
     public String getTimestamp() {

@@ -67,6 +67,7 @@ public class FlowLoggerTest {
                 .payloadId("pid2")
                 .edge()
                 .id("C")
+                .retryGroupId("R1")
                 .timestamp(ZonedDateTime.of(2017, 6, 7, 10, 44, 31, 0, ZoneId.of("Europe/Oslo")))
                 .milestone("event-values-test")
                 .status("test-ok")
@@ -91,6 +92,7 @@ public class FlowLoggerTest {
         Assert.assertEquals(event.getDestination().getPayloadType(), "fubar");
         Assert.assertEquals(event.getDestination().getPayloadId(), "pid2");
         Assert.assertEquals(event.getEdge().getId(), "C");
+        Assert.assertEquals(event.getEdge().getRetryGroupId(), "R1");
         Assert.assertEquals(event.getEdge().getTimestamp(), "2017-06-07T10:44:31+02:00");
         Assert.assertEquals(event.getEdge().getMilestone(), "event-values-test");
         Assert.assertEquals(event.getEdge().getStatus(), "test-ok");

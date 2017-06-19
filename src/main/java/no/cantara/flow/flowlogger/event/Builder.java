@@ -30,6 +30,7 @@ public class Builder {
     String destinationPayloadId;
 
     String edgeId;
+    String retryGroupId;
     ZonedDateTime timestamp;
     String milestone;
     String status = "OK";
@@ -66,7 +67,7 @@ public class Builder {
         } else {
             destination = new Node(destinationType, destinationAddress, destinationPayloadType, destinationPayloadId);
         }
-        Edge edge = new Edge(edgeId, timestamp.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME), milestone, status, errorType, errorReason, comment);
+        Edge edge = new Edge(edgeId, retryGroupId, timestamp.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME), milestone, status, errorType, errorReason, comment);
 
         return new FlowEvent(
                 correlationId,
@@ -234,6 +235,11 @@ public class Builder {
 
         public EdgeBuilder id(String edgeId) {
             Builder.this.edgeId = edgeId;
+            return this;
+        }
+
+        public EdgeBuilder retryGroupId(String retryGroupId) {
+            Builder.this.retryGroupId = retryGroupId;
             return this;
         }
 
